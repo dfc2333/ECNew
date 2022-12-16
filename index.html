@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>Encrypting</title>
+        <script>
+        function ecp(a){
+            var c = a.charCodeAt()
+            console.log(c)
+            console.log(a)
+            var re = ''
+            console.log(typeof(c))
+            c = c.toString() 
+            console.log(c)
+            c=c.split('')
+            console.log(c)
+            for (var i of c){
+                i=parseInt(i)
+                r = i.toString(2)
+                if (i === 0){
+                    r='01010'
+                }
+                var t = ''
+                for (i=1;i<=5-r.length;i++){
+                    t = t+'0'
+                }
+        
+                re = re + t+r
+            }
+            
+            return re+'11111'
+        }
+        function uep(b){
+            r = Number(b)
+            var c = String.fromCharCode(r)
+            console.log(c)
+            return c
+        }
+        function ec(a){
+            var r = '';
+            for (var i of a){
+                var re = ecp(i)
+                r = r+re
+            }
+            return r.substring(0,r.length-5)
+        }
+        function creatArr(str) {
+            var len = str.length
+        
+            let newStr = ''//截取之后返回的新字符串
+        
+            if (len > 5) {
+              newStr = str.substring(0, 5)
+              arr.push(newStr)
+              str = str.replace(newStr, '')
+              creatArr(str)
+            } else {
+              arr.push(str)
+            }
+            return arr
+          }
+        function uec(a){
+          var r = '';
+          var resu = ''
+          arr = []
+          var tm =''
+          tmp=creatArr(a)
+          console.log(tmp)
+          for (var i of tmp){
+            tm = tm + i + ','
+          }
+          console.log(tm)
+          tm = tm.split(",11111")
+          console.log(tm)
+          var t =[]
+          for (var i of tm){
+            i=i.split(',')
+            t.push(i)
+            
+          }
+        
+        
+          for (var q of t){
+            var res = ''
+            q = q.filter(x => x !== '');
+            console.log(q)
+            for (var i of q){
+                console.log(i)
+                r = parseInt(i,2)
+                r = r.toString()
+                if (r==='10'){
+                    r='0'
+                }
+                console.log(r)
+                res = res + r
+            }
+            console.log(res)
+            var re = uep(res)
+            resu = resu + re
+            console.log(resu)
+          }
+            return resu
+        }
+        
+        function getinp(){
+            a=document.getElementById("data").value
+            return a
+        } 
+        function change(a){
+            document.getElementById("data").value=a
+        }
+        </script>
+    </head>
+    <body>
+        <h1>加密程序</h1>
+        <p>encrypt system</p>
+        <a href="https://space.bilibili.com/442913557">看看作者</a>
+        <textarea id= 'data'name="about">输入。。。</textarea> 
+        <input type="button" value="加密" onclick="change(ec(getinp()))"/>
+        <input type="button" value="解密" onclick="change(uec(getinp()))"/>
+    </body>
